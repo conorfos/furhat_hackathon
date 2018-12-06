@@ -31,9 +31,9 @@ def add_message(uuid):
         Output["version"] = "0.1" # Please provide your system version. 
         Output["terminal"] = False
         Output["timeStamp"] = datetime.now().isoformat() 
-        Output["sys"] = "Welcome to Mybot... " # Introduction Message
+        Output["sys"] = "Hi there, how can I help you?" # Introduction Message
         Output["imageurl"] = "https://skylar.speech.cs.cmu.edu/image/movie.jpg" # Put an image url to show on the screen."
-        return jsonify(Output)
+        return Output["sys"]
 
     if uuid == "next": #Get your system's next response
         content = request.json
@@ -59,7 +59,7 @@ def add_message(uuid):
             Output["imageurl"] = response["imageurl"]
             Output["terminal"] = False
             Output["sys"] = response["sys"]
-        return jsonify(Output)
+        return Output["sys"]
     
     if uuid == "end":  #Terminate a session with your system
         content = request.json
