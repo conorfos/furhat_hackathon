@@ -7,12 +7,27 @@
     Python Version: 2.7
 '''
 
+import wolframalpha
+import json
+
+def resolveListOrDict(variable):
+    if isinstance(variable, list):
+        return variable[0]['plaintext']
+    else:
+        return variable['plaintext'] 
+
 class API(object):
     def __init__(self):
         self.history = []
+        self.wolfram_client = wolframalpha.Client("7WVQTR-9R6AG9UYGJ")   
     
     def GetResponse(self,text):
+        res = self.wolfram_client.query(text)
+        pod = res['pod'][1]
+        result = resolveListOrDict(pod['subpod'])
+        print(result)
+        #print str(pod)
         slu = {"act":"dialog_act","slot":"named_entity"} 
-        sysUtter = "sysUtter" 
+        sysUtter = result
         imageurl = "imageurl"
         return {"slu":slu,"sys":sysUtter,"imageurl":imageurl} 
